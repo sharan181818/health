@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: my_postgres_container
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - my_network
+
+  backend:
+    build:
+      context: ./backend # Replace with the path to your Node.js backend
+      dockerfile: Dockerfile1 # Specify the Dockerfile for the backend service
+    container_name: my_backend_container
+    restart: always
+    ports:
+      - "3001:3001"
+    networks:
+      - my_network
+    # Add your backend environment variables here
+
+  nextjs:
+    build:
+      context: . # Replace with the path to your Next.js app
+      dockerfile: Dockerfile # Specify the Dockerfile for the Next.js service
+    container_name: my_nextjs_container
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - my_network
+    # Add your Next.js environment variables here
+
+networks:
+  my_network:
+    driver: bridge

@@ -2,6 +2,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import { Input } from "@/components/ui/input"
+
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
 const MedicinePurchaseForm = () => {
     const [medicineId, setMedicineId] = useState('');
     const [quantity, setQuantity] = useState('');
@@ -22,22 +35,27 @@ const MedicinePurchaseForm = () => {
     };
 
     return (
-        <div>
-            <h2>Buy Medicine</h2>
+            <Card className="w-[500px] h-fit ">
+        <CardHeader>
+            <CardTitle>Medicines</CardTitle>
+            <CardDescription>Buy Medicines</CardDescription>
+           </CardHeader>
+            <CardContent>
             <form onSubmit={handleSubmit}>
-                <label>
+                <Label>
                     Medicine ID:
-                    <input type="text" value={medicineId} onChange={(e) => setMedicineId(e.target.value)} />
-                </label>
+                    <Input type="text" value={medicineId} onChange={(e) => setMedicineId(e.target.value)} />
+                </Label>
                 <br />
-                <label>
+                <Label>
                     Quantity:
-                    <input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-                </label>
+                    <Input type="text" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+                </Label>
                 <br />
-                <button className='bg-blue-300 rounded-md p-2' type="submit">Buy Medicine</button>
+                <Button className='w-full' type="submit">Buy Medicine</Button>
             </form>
-        </div>
+            </CardContent>
+            </Card>
     );
 };
 
